@@ -1,0 +1,148 @@
+02_queries
+
+select * from cliente;
++------------+--------+---------+-----+----------------------------+
+| id_cliente | nome   | cognome | eta | Email                      |
++------------+--------+---------+-----+----------------------------+
+|          1 | Marco  | Rossi   |  35 | marco.rossi@example.com    |
+|          2 | Giulia | Bianchi |  28 | giulia.bianchi@example.com |
+|          3 | Luca   | Verdi   |  42 | luca.verdi@example.com     |
+|          4 | Marco  | Rossi   |  35 | marco.rossi@example.com    |
+|          5 | Giulia | Bianchi |  28 | giulia.bianchi@example.com |
+|          6 | Luca   | Verdi   |  42 | luca.verdi@example.com     |
++------------+--------+---------+-----+----------------------------+
+
+
+select * from camera;
++-----------+--------+-----------+--------------+
+| id_camera | numero | tipologia | prezzo_notte |
++-----------+--------+-----------+--------------+
+|         1 |    101 | Singola   |        80.00 |
+|         2 |    102 | Doppia    |       120.00 |
+|         3 |    201 | Suite     |       220.00 |
+|         4 |    101 | Singola   |        80.00 |
+|         5 |    102 | Doppia    |       120.00 |
+|         6 |    201 | Suite     |       220.00 |
++-----------+--------+-----------+--------------+
+select * from cliente where eta >30;
++------------+-------+---------+-----+-------------------------+
+| id_cliente | nome  | cognome | eta | Email                   |
++------------+-------+---------+-----+-------------------------+
+|          1 | Marco | Rossi   |  35 | marco.rossi@example.com |
+|          3 | Luca  | Verdi   |  42 | luca.verdi@example.com  |
+|          4 | Marco | Rossi   |  35 | marco.rossi@example.com |
+|          6 | Luca  | Verdi   |  42 | luca.verdi@example.com  |
++------------+-------+---------+-----+-------------------------+
+
+
+select * from camera where prezzo_notte > 100;
++-----------+--------+-----------+--------------+
+| id_camera | numero | tipologia | prezzo_notte |
++-----------+--------+-----------+--------------+
+|         2 |    102 | Doppia    |       120.00 |
+|         3 |    201 | Suite     |       220.00 |
+|         5 |    102 | Doppia    |       120.00 |
+|         6 |    201 | Suite     |       220.00 |
++-----------+--------+-----------+--------------+
+SELECT * FROM CLIENTE;
++------------+--------+---------+-----+----------------------------+
+| id_cliente | nome   | cognome | eta | Email                      |
++------------+--------+---------+-----+----------------------------+
+|          1 | Marco  | Rossi   |  35 | marco.rossi@example.com    |
+|          2 | Giulia | Bianchi |  28 | giulia.bianchi@example.com |
+|          3 | Luca   | Verdi   |  42 | luca.verdi@example.com     |
+|          4 | Marco  | Rossi   |  35 | marco.rossi@example.com    |
+|          5 | Giulia | Bianchi |  28 | giulia.bianchi@example.com |
+|          6 | Luca   | Verdi   |  42 | luca.verdi@example.com     |
++------------+--------+---------+-----+----------------------------+
+
+
+SELECT * FROM CAMERA;
++-----------+--------+-----------+--------------+
+| id_camera | numero | tipologia | prezzo_notte |
++-----------+--------+-----------+--------------+
+|         1 |    101 | Singola   |        80.00 |
+|         2 |    102 | Doppia    |       120.00 |
+|         3 |    201 | Suite     |       220.00 |
+|         4 |    101 | Singola   |        80.00 |
+|         5 |    102 | Doppia    |       120.00 |
+|         6 |    201 | Suite     |       220.00 |
++-----------+--------+-----------+--------------+
+
+SELECT * FROM SOGGIORNA
+    WHERE servizio >= 8;
++------------+-----------+------------+------------+----------+
+| id_cliente | id_camera | data_in    | data_out   | servizio |
++------------+-----------+------------+------------+----------+
+|          1 |         1 | 2026-01-20 | 2026-01-22 |        8 |
+|          2 |         2 | 2026-01-21 | 2026-01-25 |        9 |
++------------+-----------+------------+------------+----------+
+
+
+SELECT * FROM SOGGIORNA
+    ORDER BY data_in DESC;
++------------+-----------+------------+------------+----------+
+| id_cliente | id_camera | data_in    | data_out   | servizio |
++------------+-----------+------------+------------+----------+
+|          2 |         1 | 2026-02-05 | 2026-02-07 |        5 |
+|          1 |         2 | 2026-02-01 | 2026-02-03 |        6 |
+|          3 |         3 | 2026-01-22 | 2026-01-26 |        7 |
+|          2 |         2 | 2026-01-21 | 2026-01-25 |        9 |
+|          1 |         1 | 2026-01-20 | 2026-01-22 |        8 |
++------------+-----------+------------+------------+----------+
+
+SELECT id_camera, COUNT(*) AS numero_soggiorni
+    FROM SOGGIORNA
+    GROUP BY id_camera;
++-----------+------------------+
+| id_camera | numero_soggiorni |
++-----------+------------------+
+|         1 |                2 |
+|         2 |                2 |
+|         3 |                1 |
++-----------+------------------+
+
+SELECT * 
+    FROM CLIENTE
+    WHERE cognome LIKE 'B%';
++------------+--------+---------+-----+----------------------------+
+| id_cliente | nome   | cognome | eta | Email                      |
++------------+--------+---------+-----+----------------------------+
+|          2 | Giulia | Bianchi |  28 | giulia.bianchi@example.com |
+|          5 | Giulia | Bianchi |  28 | giulia.bianchi@example.com |
++------------+--------+---------+-----+----------------------------+
+
+SELECT id_camera, COUNT(*) AS numero_soggiorni, AVG(servizio) AS media_pulizia
+    FROM SOGGIORNA
+    GROUP BY id_camera
+    HAVING COUNT(*) > 1 OR AVG(servizio) >= 8;
++-----------+------------------+---------------+
+| id_camera | numero_soggiorni | media_pulizia |
++-----------+------------------+---------------+
+|         1 |                2 |        6.5000 |
+|         2 |                2 |        7.5000 |
++-----------+------------------+---------------+
+
+SELECT *
+    FROM SOGGIORNA
+    WHERE data_in LIKE '2026-01-%' OR data_in LIKE '2026-02-%';
++------------+-----------+------------+------------+----------+
+| id_cliente | id_camera | data_in    | data_out   | servizio |
++------------+-----------+------------+------------+----------+
+|          1 |         1 | 2026-01-20 | 2026-01-22 |        8 |
+|          1 |         2 | 2026-02-01 | 2026-02-03 |        6 |
+|          2 |         1 | 2026-02-05 | 2026-02-07 |        5 |
+|          2 |         2 | 2026-01-21 | 2026-01-25 |        9 |
+|          3 |         3 | 2026-01-22 | 2026-01-26 |        7 |
++------------+-----------+------------+------------+----------+
+
+SELECT *
+    FROM SOGGIORNA
+    WHERE (data_in LIKE '2026-01-%' OR data_in LIKE '2026-02-%') AND servizio >= 7;
++------------+-----------+------------+------------+----------+
+| id_cliente | id_camera | data_in    | data_out   | servizio |
++------------+-----------+------------+------------+----------+
+|          1 |         1 | 2026-01-20 | 2026-01-22 |        8 |
+|          2 |         2 | 2026-01-21 | 2026-01-25 |        9 |
+|          3 |         3 | 2026-01-22 | 2026-01-26 |        7 |
++------------+-----------+------------+------------+----------+
