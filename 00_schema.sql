@@ -1,31 +1,44 @@
-00_schema
+00_schema.sql
 
 
-create database hotel;
-	
-CREATE TABLE cliente (
-    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+CREATE DATABASE scuola_guida;
+
+USE scuola_guida;
+
+
+CREATE TABLE Allievi (
+    id_allievo INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
-    eta INT NOT NULL,
-    Email VARCHAR(50) NOT NULL
-    );
+    data_nascita DATE
+);
 
-CREATE TABLE camera (
-     id_camera INT PRIMARY KEY AUTO_INCREMENT,
-    numero INT NOT NULL,
-    tipologia VARCHAR(30) NOT NULL,
-    prezzo_notte DECIMAL(6,2) NOT NULL
-    );
 
- create table SOGGIORNA(
-    id_cliente INT,
-    id_camera INT,
-    data_in DATE,
-    data_out DATE,
-    servizio INT,
-    PRIMARY KEY (id_cliente, id_camera, data_in),
-    FOREIGN KEY (id_cliente) REFERENCES CLIENTE(id_cliente),
-    FOREIGN KEY (id_camera) REFERENCES CAMERA(id_camera)
-    );
+CREATE TABLE Istruttori (
+    id_istruttore INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    cognome VARCHAR(50) NOT NULL,
+    specializzazione VARCHAR(50)
+);
+
+
+CREATE TABLE Veicoli (
+    id_veicolo INT AUTO_INCREMENT PRIMARY KEY,
+    marca VARCHAR(50) NOT NULL,
+    modello VARCHAR(50) NOT NULL,
+    targa VARCHAR(15) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE Lezioni (
+    id_lezione INT AUTO_INCREMENT PRIMARY KEY,
+    id_allievo INT NOT NULL,
+    id_istruttore INT NOT NULL,
+    id_veicolo INT NOT NULL,
+    data_ora DATETIME NOT NULL,
+    FOREIGN KEY (id_allievo) REFERENCES Allievi(id_allievo) ON DELETE CASCADE,
+    FOREIGN KEY (id_istruttore) REFERENCES Istruttori(id_istruttore) ON DELETE CASCADE,
+    FOREIGN KEY (id_veicolo) REFERENCES Veicoli(id_veicolo) ON DELETE CASCADE
+);
+
 
