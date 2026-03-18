@@ -1,0 +1,15 @@
+MERGE (anna:Utente {nome: "Anna"})
+MERGE (luca:Utente {nome: "Luca"})
+MERGE (marco:Utente {nome: "Marco"})
+MERGE (giulia:Utente {nome: "Giulia"})
+MERGE (elena:Utente {nome: "Elena"})
+
+MERGE (anna)-[:SEGUE]->(luca)
+MERGE (anna)-[:SEGUE]->(marco)
+MERGE (marco)-[:SEGUE]->(anna)
+MERGE (giulia)-[:SEGUE]->(anna)
+MERGE (giulia)-[:SEGUE]->(luca)
+MERGE (giulia)-[:SEGUE]->(marco)
+MERGE (giulia)-[:SEGUE]->(elena);
+
+MATCH p=()-[]->() RETURN p LIMIT 25;

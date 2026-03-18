@@ -1,0 +1,15 @@
+MERGE (alice:Persona {nome: "Alice"})
+MERGE (bob:Persona {nome: "Bob"})
+MERGE (carol:Persona {nome: "Carol"})
+MERGE (dan:Persona {nome: "Dan"})
+
+MERGE (alice)-[:AMICO]->(bob)
+MERGE (bob)-[:AMICO]->(alice)
+
+MERGE (alice)-[:AMICO]->(carol)
+MERGE (carol)-[:AMICO]->(alice)
+
+MERGE (bob)-[:AMICO]->(dan)
+MERGE (dan)-[:AMICO]->(bob)
+
+RETURN "Creato correttamente" AS messaggio;
